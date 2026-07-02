@@ -19,6 +19,14 @@ Codex is a bounded implementation worker in this repository.
 - Do not edit `scripts/codex-delegate.ps1` unless explicitly asked to debug the harness.
 - Do not treat generated output as approved just because tests pass.
 
+## Native Windows Shell Failures
+
+- If shell execution fails with `CreateProcessAsUserW failed: 5`, do not thrash or repeatedly retry.
+- Continue only if the ticket can be completed safely via direct file edits or `apply_patch`.
+- Clearly report which validation commands were skipped because shell execution was unavailable.
+- Never report tests or checks as passing unless they actually ran and passed.
+- Prefer small patches and explicit reviewer checks.
+
 ## Final Response Format
 
 Use this format:

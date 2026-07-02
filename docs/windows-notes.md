@@ -20,7 +20,7 @@ The template includes `.gitattributes` so common text files use LF endings. This
 
 Keep generated artifacts out of Git. They may contain host-specific paths and tool output.
 
-## Native Sandbox Error
+## CreateProcessAsUserW failed: 5
 
 Native Windows Codex sandboxing may fail with:
 
@@ -28,14 +28,20 @@ Native Windows Codex sandboxing may fail with:
 CreateProcessAsUserW failed: 5
 ```
 
-Treat this as a Codex sandbox or host environment issue. Do not silently bypass review, merge unreviewed work, or edit the wrapper to remove safety boundaries just to make a run complete.
+At a practical level, this means Codex could not spawn a process inside the native Windows sandbox. It may block shell commands such as `git`, `pwsh`, test runners, archive tools, or language-specific commands.
 
-Useful checks:
+This does not necessarily mean Codex cannot edit files. A ticket may still be safe to complete with bounded patch or file-edit operations when the repository contents are enough to make the change.
 
-- confirm the Codex CLI works outside the wrapper
-- retry read mode with a small ticket
+Treat this as a Codex sandbox or host environment issue. Do not silently bypass review, merge unreviewed work, edit the wrapper to remove safety boundaries, or switch casually to `danger-full-access` just to make a run complete.
+
+If Codex returns after this error, run validation outside Codex from a normal trusted shell. Suggested local manual checks:
+
+- inspect `.agent-runs/<run-id>/summary.md`
 - inspect `.agent-runs/<run-id>/stderr.log`
-- record the failure as an environment issue if the sandbox cannot spawn processes
+- for write mode, inspect `.agent-runs/<run-id>/status.txt`
+- for write mode, inspect `.agent-runs/<run-id>/diff.patch`
+- run the validation commands Codex listed as skipped
+- run the repository's normal lint, test, or build commands before accepting changes
 
 ## Why Write Mode Needs An Initial Commit
 

@@ -17,6 +17,18 @@ You help Claude Code delegate bounded work to Codex through the local wrapper.
 - Do not merge.
 - Do not push.
 
+## Ticket Writing
+
+For native Windows compatibility, include this section in future write tickets and in read tickets that might otherwise depend on shell commands:
+
+```markdown
+## Windows execution constraint
+
+On native Windows, Codex shell execution may fail with `CreateProcessAsUserW failed: 5`.
+
+Do not rely on shell commands to complete this ticket. If shell commands fail, continue only if the requested file edits can be made safely from the repository contents. Report skipped validation commands in the final summary. The human reviewer will run validation outside Codex.
+```
+
 ## Invocation
 
 Use read mode for audits, surveys, and design checks:

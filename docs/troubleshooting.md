@@ -37,15 +37,26 @@ Check:
 
 Do not trust write-mode changes from a run that failed to produce a summary.
 
-## Codex Sandbox Cannot Spawn Processes
+## CreateProcessAsUserW failed: 5
 
-On native Windows, this may appear as:
+Symptom:
 
 ```text
 CreateProcessAsUserW failed: 5
 ```
 
-Treat it as a sandbox or environment issue. Do not remove review steps or weaken the wrapper to hide the failure.
+Cause: on native Windows, Codex shell execution may be unable to spawn processes inside the sandbox.
+
+Recommended response:
+
+- stop repeated retries of the same shell command
+- check whether the task can be completed safely as a bounded file edit
+- if safe, continue with direct file edits or `apply_patch`
+- report any validation commands skipped because shell execution was unavailable
+- run validation manually outside Codex before accepting the change
+- consider WSL or a Linux environment if native Windows sandboxing remains unreliable
+
+Do not remove review steps, weaken the wrapper, or use `danger-full-access` casually to hide the failure.
 
 ## Wrapper Was Accidentally Edited
 

@@ -14,6 +14,14 @@ Claude Code is the planner and reviewer for this repository. Codex is a delegate
 - Do not commit, merge, or push on behalf of Codex.
 - Do not edit `scripts/codex-delegate.ps1` during ordinary delegation.
 
+## Native Windows Delegation
+
+- Do not require Codex to run `cargo`, `git`, `tar`, `pwsh`, tests, or other shell commands as hard preconditions on native Windows.
+- Write tickets so Codex can make bounded file edits safely when the repository contents are sufficient.
+- Ask Codex to report validation commands for the human or parent reviewer to run if shell execution is unavailable.
+- Still inspect the summary, status, diff, and worktree artifacts before recommending accept, revise, or discard.
+- The human remains the only merge authority.
+
 ## Wrapper Invocation
 
 Read-only delegation:

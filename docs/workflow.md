@@ -36,6 +36,8 @@ Write mode is for narrow implementation tickets. It requires an existing Git `HE
 
 Use write mode when the ticket names the files Codex may edit and the checks it should run.
 
+On native Windows, shell execution inside the Codex sandbox may fail with `CreateProcessAsUserW failed: 5`. Write tickets so bounded file edits can still be completed safely when possible, and list validation commands for the human reviewer to run if Codex cannot run them.
+
 ## Reviewing A Run
 
 Start with:

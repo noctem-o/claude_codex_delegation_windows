@@ -103,6 +103,11 @@ Follow these rules:
 - Do not touch secrets, credentials, private logs, provider config, or local-only files.
 - Do not edit scripts/codex-delegate.ps1 unless the ticket explicitly asks you to debug the harness.
 - Stop and report if the ticket is under-specified, contradictory, or unsafe.
+- Native Windows shell execution may fail with CreateProcessAsUserW failed: 5.
+- If shell or process commands fail with that error, do not repeatedly retry them.
+- Continue with patch or file edits only when the ticket can be completed safely from repository contents.
+- Report validation commands skipped because shell execution was unavailable.
+- Never claim tests or checks passed unless they actually ran and passed.
 
 Final response format:
 Files changed

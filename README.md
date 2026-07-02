@@ -77,13 +77,17 @@ powershell.exe -ExecutionPolicy Bypass -File .\scripts\codex-delegate.ps1 read .
 
 The repository uses `.gitattributes` to keep common text files on LF endings. This reduces patch churn when work moves between Windows and Unix-like environments.
 
-Native Windows Codex sandboxing may fail with:
+## Native Windows Caveat
+
+Native Windows Codex shell execution may fail with:
 
 ```text
 CreateProcessAsUserW failed: 5
 ```
 
-Treat that as a sandbox or local environment issue, not as a reason to silently bypass review, skip the wrapper, or merge unreviewed changes.
+This appears to affect shell or process spawning, not necessarily patch or file edits. Codex may still be able to complete bounded file-edit tasks when the requested change is safe from the repository contents.
+
+Treat this as a sandbox or local environment issue, not as a reason to bypass review, skip the wrapper, or merge unreviewed changes. On native Windows, tickets should prefer bounded file-edit tasks and list validation commands as reviewer checks. If Codex shell execution is unavailable, the human or parent reviewer should run validation outside Codex before accepting the change.
 
 ## Safety Model
 
